@@ -1,0 +1,28 @@
+cluster: "koa"
+
+form:
+  - auto_modules_py-tensorflow
+  - tb_logdir
+  - tb_extra_args
+<%- IO.foreach(File.expand_path(File.dirname(__FILE__))+"/../_common/form/form.yml") do |line| %>
+  <%= line %>
+<%- end -%>
+
+
+attributes:
+
+  auto_modules_py-tensorflow:
+    label: "Tensorflow version"
+    default: false
+
+  tb_logdir:
+    label: "Tensorboard logdir"
+    required: true
+    help: "The directory that contains data to visualize."
+
+  tb_extra_args:
+    label: "Additional TensorBoard arguments (optional)"
+
+<%- IO.foreach(File.expand_path(File.dirname(__FILE__))+"/../_common/form/attributes.yml") do |line| %>
+  <%= line %>
+<%- end -%>
