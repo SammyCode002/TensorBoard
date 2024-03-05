@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+
+# load modules
+module reset
+module load vis/tensorboard system/tensorflow
+
+# Set working directory to home directory
+cd "${HOME}"
+
+# start server
+# start on 0.0.0.0, since TensorBoard doesn't support any kind of authentication
+# and we rely on authrevproxy to only allow authentified requests
+tensorboard --logdir=<%= context.tb_logdir %> <%= context.tb_extra_args %> \
+            --host=0.0.0.0 \
+            --port="${app_port}"
