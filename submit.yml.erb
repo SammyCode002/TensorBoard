@@ -1,17 +1,22 @@
 batch_connect:
   template: "basic"
-
+  conn_params:
+    - csrf_token  
 script:
-  native: [
-            "-N", "1",
-            "-c", "<%= sh_cpus.blank?  ? 1 : sh_cpus.to_i %>",
-            <%- if not sh_gpus.blank? -%>
-                "-G", "<%= sh_gpus.to_i %>",
-            <%- end -%>
-            <%- if not sh_mem.blank? -%>
-                "--mem", "<%= sh_mem.to_i %>G",
-            <%- end -%>
-            <%- if not sh_features.blank? -%>
-                "--constraint", "<%= sh_features %>"
-            <%- end -%>
-          ]
+  email: <%= ENV["USER"] %>@hawaii.edu
+  <% if gpu_count.to_i != 0%><% if gpu_type.blank? %>
+  native:
+    - "--cpus-per-task=<%= num_cores.blank? ? 1 : num_cores.to_i %>"
+    - "--mem=<%=mem_in_gigabytes.blank? ? 1 :mem_in_gigabytes.to_i %>G"
+    - "--gres=gpu:<%=gpu_count.to_s%>"
+  <% else %>
+  native:
+   - "--cpus-per-task=<%= num_cores.blank? ? 1 : num_cores.to_i %>"
+   - "--mem=<%=mem_in_gigabytes.blank? ? 1 :mem_in_gigabytes.to_i %>G"
+   - "--gres=gpu:<%=gpu_type.to_s%>:<%=gpu_count.to_s%>"
+  <% end %>
+  <% else %>
+  native:
+    - "--cpus-per-task=<%= num_cores.blank? ? 1 : num_cores.to_i %>"
+    - "--mem=<%=mem_in_gigabytes.blank? ? 1 :mem_in_gigabytes.to_i %>G"
+  <% end %>
