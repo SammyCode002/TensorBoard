@@ -3,16 +3,16 @@
 #
 # Load modules
 #
-
 # Load the Tensorflow module (required)
-module load <%= context.version %>
+module load lang/Anaconda3/
 
-<%- unless context.modules.blank? -%>
-# Load additional modules
-module load <%= context.modules %>
-<%- end -%>
+source activate ood_tensorboard
 
-#
+# Moved from before.sh.erb to selfcontain nd use after activating the environment
+# background start authrevproxy, to authentify web requests to the application
+bin/authrevproxy.py --app-port="$app_port" --proxy-port="$proxy_port" &
+
+
 # Start Tensorboard Server
 #
 
@@ -22,6 +22,6 @@ cd "${HOME}"
 # Launch the Tensorboard Server
 # start on 127.0.0.1, since TensorBoard doesn't support any kind of authentication
 # and we rely on authrevproxy to only allow authentified requests
-tensorboard --logdir=<%= context.tb_logdir %> \
+tensorboard --logdir=/tmp \
             --host=127.0.0.1 \
             --port="${app_port}"
