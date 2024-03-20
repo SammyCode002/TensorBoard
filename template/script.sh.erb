@@ -1,12 +1,11 @@
 #!/usr/bin/env bash
 
-#
 # Load modules
-#
 # Load the Tensorflow module (required)
-module load lang/Anaconda3/
+module load lang/Python/3.10.8-GCCcore-12.2.0
 
-source activate ood_tensorboard
+# Activate the virtual environment
+source /your path /activate
 
 # Moved from before.sh.erb to selfcontain nd use after activating the environment
 # background start authrevproxy, to authentify web requests to the application
