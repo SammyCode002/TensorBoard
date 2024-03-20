@@ -11,7 +11,8 @@
 from twisted.internet import reactor, endpoints
 from twisted.web import proxy, server
 from twisted.web.resource import Resource
-from twisted.web.resource import ForbiddenResource
+from twisted.web.pages import forbidden
+
 
 import argparse
 import getpass
@@ -98,3 +99,4 @@ def main(argv=sys.argv[1:]):
 
 if __name__ == '__main__':
     main()
+
