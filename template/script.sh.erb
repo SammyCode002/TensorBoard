@@ -5,22 +5,15 @@
 module load lang/Python/3.10.8-GCCcore-12.2.0
 
 # Activate the virtual environment
-source /your path /activate
+source /your path /bin/activate
 
-# Moved from before.sh.erb to selfcontain nd use after activating the environment
-# background start authrevproxy, to authentify web requests to the application
-bin/authrevproxy.py --app-port="$app_port" --proxy-port="$proxy_port" &
+# Start the authentication reverse proxy in the background
+/your path/bin/authrevproxy.py --app-port="$app_port" --proxy-port="$proxy_port" &
 
-
-# Start Tensorboard Server
-#
-
-# Set working directory to home directory
+# Set the working directory to the home directory
 cd "${HOME}"
 
-# Launch the Tensorboard Server
-# start on 127.0.0.1, since TensorBoard doesn't support any kind of authentication
-# and we rely on authrevproxy to only allow authentified requests
+# Launch the TensorBoard server
 tensorboard --logdir=/tmp \
             --host=127.0.0.1 \
             --port="${app_port}"
