@@ -1,7 +1,7 @@
 # wait for the Tensorboard server to start
 echo "$(date): waiting for Tensorboard server to open port ${app_port}..."
 
-if wait_until_port_used "127.0.0.1:${port}" 300; then
+if wait_until_port_used "127.0.0.1:${app_port}" 300; then
     echo "$(date): discovered Tensorboard server listening on port ${app_port}!"
 
   # wait for the authenticating proxy to start

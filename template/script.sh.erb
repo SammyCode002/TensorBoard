@@ -5,10 +5,11 @@
 module load lang/Python/3.10.8-GCCcore-12.2.0
 
 # Activate the virtual environment
-source /your path /bin/activate
+# Update this path to match your virtual environment location
+source "${HOME}/tensorboard_env/bin/activate"
 
 # Start the authentication reverse proxy in the background
-/your path/bin/authrevproxy.py --app-port="$app_port" --proxy-port="$proxy_port" &
+bin/authrevproxy.py --app-port="$app_port" --proxy-port="$proxy_port" &
 
 # Set the working directory to the home directory
 cd "${HOME}"
